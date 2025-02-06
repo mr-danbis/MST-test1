@@ -3,24 +3,32 @@
 @@include('../blocks/head/head.html')
 
 <body>
-  <div class="wrapper">
+    <div class="wrapper">
 
-    @@include('../blocks/header/header.html')
-    <!-- /.header --> 
+        <div class="box" id="about">
+            @@include('../blocks/header/header.html')
+            <!-- /.header -->
+            @@include('../blocks/screen/screen.html')
+            <!-- /.screen -->
+        </div>
 
-    <main class="main">
-      
-    </main>
-    <!-- /.main -->
+        <main class="main">
+            @@include('../blocks/advantages/advantages.html')
+            <!-- /.advantages -->
+
+            @@include('../blocks/contact/contact.html')
+            <!-- /.contact -->
+        </main>
+        <!-- /.main -->
 
 
-    @@include('../blocks/footer/footer.html')
-    <!-- /.footer -->
-      
-  </div>
-  <!-- /.wrapper -->
+        @@include('../blocks/footer/footer.html')
+        <!-- /.footer -->
 
-  <script src="js/main.min.js"></script>
+    </div>
+    <!-- /.wrapper -->
+
+    <script src="js/main.js"></script>
 </body>
 
 </html>

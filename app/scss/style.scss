@@ -1,8 +1,7 @@
 //settings
-@import 'settings/vars';
-@import 'settings/fonts';
 @import 'settings/reset';
-@import 'settings/libs';
+@import 'settings/fonts';
+@import 'settings/vars';
 @import 'settings/global';
 
 //common blocks
@@ -10,3 +9,6 @@
 @import '../blocks/footer/footer';
 
 //main page blocks
+@import '../blocks/screen/screen';
+@import '../blocks/advantages/advantages';
+@import '../blocks/contact/contact';

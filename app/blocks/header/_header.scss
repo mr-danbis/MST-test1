@@ -1,0 +1,31 @@
+.header {
+    @include adaptiv-paddingTop(38, 15);
+    @include adaptiv-paddingBottom(30, 15);
+    transition: all .3s;
+    z-index: 10;
+
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+
+    &--fixed{
+        padding: 10px 0;
+        position: fixed;
+        background-color: rgba(0, 0, 0, 0.603);
+    }
+    
+    &__container {
+        display: flex;
+        align-items: center;
+    }
+
+}
+
+@media (max-width: 800px) {
+    .header{
+        &__container{
+            justify-content: space-between;
+        }
+    }
+}

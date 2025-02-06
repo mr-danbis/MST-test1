@@ -18,7 +18,10 @@ function html() {
 
 function styles() {
   return src("app/scss/style.scss")
-    .pipe(scss({ outputStyle: "compressed" }))
+    .pipe(scss({ outputStyle: "compressed" }).on("error", function(error) {
+      console.log(error.toString());
+      this.emit('end');
+    }))
     .pipe(concat("style.min.css"))
     .pipe(
       autoprefixer({
@@ -56,12 +59,9 @@ function browsersync() {
 }
 
 function watching() {
-  watch(["app/pages/*.html", "app/blocks/**/*.html"], html).on(
-    "change",
-    browserSync.reload
-  );
+  watch(["app/pages/*.html", "app/blocks/**/*.html"], html);
   watch(["app/scss/**/*.scss", "app/blocks/**/*.scss"], styles);
-  watch(["app/js/**/*.js", "!app/js/main.min.js", "!app/js/owl.carousel.min.js"], scripts);
+  watch(["app/js/**/*.js", "!app/js/main.min.js"], scripts);
 }
 
 function build() {
