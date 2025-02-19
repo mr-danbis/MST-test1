@@ -4,8 +4,8 @@ const scss = require("gulp-sass")(require("sass"));
 const concat = require("gulp-concat");
 const browserSync = require("browser-sync").create();
 const uglify = require("gulp-uglify-es").default;
-const autoprefixer = require("gulp-autoprefixer");
-const del = require("del");
+const autoprefixer = require('gulp-autoprefixer').default;
+const { deleteAsync } = require('del');
 const fileinclude = require("gulp-file-include");
 
 function html() {
@@ -18,10 +18,7 @@ function html() {
 
 function styles() {
   return src("app/scss/style.scss")
-    .pipe(scss({ outputStyle: "compressed" }).on("error", function(error) {
-      console.log(error.toString());
-      this.emit('end');
-    }))
+    .pipe(scss({ style: "compressed" }).on('error', scss.logError))
     .pipe(concat("style.min.css"))
     .pipe(
       autoprefixer({
@@ -45,9 +42,9 @@ function scripts() {
 }
 
 
-function images() {
-  return src("app/images/**/*").pipe(dest("dist/images"));
-}
+// function images() {
+//   return src("app/images/**/*").pipe(dest("docs/images"));
+// }
 
 function browsersync() {
   browserSync.init({
@@ -61,39 +58,32 @@ function browsersync() {
 function watching() {
   watch(["app/pages/*.html", "app/blocks/**/*.html"], html);
   watch(["app/scss/**/*.scss", "app/blocks/**/*.scss"], styles);
-  watch(["app/js/**/*.js", "!app/js/main.min.js"], scripts);
+  watch(["app/js/**/main.js"], scripts);
 }
 
 function build() {
   return src([
     'app/*.html',
-    'app/css/style.min.css',
-    'app/js/*.js',
-    "!app/js/main.js",
-    'app/fonts/**/*',
-    //'app/favicon.ico'
+    'app/css/*.css',
+    "app/js/main.min.js",
+    // 'app/fonts/**/*',
   ], {base: 'app'})
-    .pipe(dest('dist'));
-}
-
-function cleanDist() {
-  return del("dist");
+    .pipe(dest('docs'));
 }
 
 function cleanPages() {
-  return del("app/*.html");
+  return deleteAsync("app/*.html");
 }
 
 exports.styles = styles;
 exports.watching = watching;
 exports.browsersync = browsersync;
 exports.scripts = scripts;
-exports.images = images;
-exports.cleanDist = cleanDist;
+// exports.images = images;
 exports.cleanPages = cleanPages;
 exports.html = html;
 
-exports.build = series(cleanDist, images, build);
+exports.build = series(build);
 exports.default = parallel(
   cleanPages,
   html,
